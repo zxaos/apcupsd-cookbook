@@ -26,7 +26,7 @@
 #     940-1524C, 940-0024G, 940-0095A, 940-0095B,
 #     940-0095C, M-04-02-2000
 #
-UPSCABLE smart
+UPSCABLE <%= node[:apcupsd][:upscable] %>
 
 # To get apcupsd to work, in addition to defining the cable
 # above, you must also define a UPSTYPE, which corresponds to
@@ -73,8 +73,8 @@ UPSCABLE smart
 #                            passphrase are the credentials for which the card 
 #                            has been configured.
 #
-UPSTYPE apcsmart
-DEVICE /dev/ttyS0
+UPSTYPE <%= node[:apcupsd][:upstype] %>
+DEVICE <%= node[:apcupsd][:device] %>
 
 # POLLTIME <int>
 #   Interval (in seconds) at which apcupsd polls the UPS for status. This
@@ -83,27 +83,27 @@ DEVICE /dev/ttyS0
 #   will improve apcupsd's responsiveness to certain events at the cost of
 #   higher CPU utilization. The default of 60 is appropriate for most
 #   situations.
-#POLLTIME 60
+POLLTIME <%= node[:apcupsd][:polltime] %>
 
 # LOCKFILE <path to lockfile>
 #   Path for device lock file. Not used on Win32.
-LOCKFILE /var/lock
+LOCKFILE <%= node[:apcupsd][:lockfile] %>
 
 # SCRIPTDIR <path to script directory>
 #   Directory in which apccontrol and event scripts are located.
-SCRIPTDIR /etc/apcupsd
+SCRIPTDIR <%= node[:apcupsd][:scriptdir] %>
 
 # PWRFAILDIR <path to powerfail directory>
 #   Directory in which to write the powerfail flag file. This file
 #   is created when apcupsd initiates a system shutdown and is
 #   checked in the OS halt scripts to determine if a killpower
 #   (turning off UPS output power) is required.
-PWRFAILDIR /etc/apcupsd
+PWRFAILDIR <%= node[:apcupsd][:pwrfaildir] %>
 
 # NOLOGINDIR <path to nologin directory>
 #   Directory in which to write the nologin file. The existence
 #   of this flag file tells the OS to disallow new logins.
-NOLOGINDIR /etc
+NOLOGINDIR <%= node[:apcupsd][:nologindir] %>
 
 
 #
@@ -119,7 +119,7 @@ NOLOGINDIR /etc
 #   ONBATTERYDELAY time.  If you don't want to be annoyed by short
 #   powerfailures, make sure that apccontrol powerout does nothing
 #   i.e. comment out the wall.
-ONBATTERYDELAY 6
+ONBATTERYDELAY <%= node[:apcupsd][:onbatterydelay] %>
 
 # 
 # Note: BATTERYLEVEL, MINUTES, and TIMEOUT work in conjunction, so
@@ -129,12 +129,12 @@ ONBATTERYDELAY 6
 # If during a power failure, the remaining battery percentage
 # (as reported by the UPS) is below or equal to BATTERYLEVEL, 
 # apcupsd will initiate a system shutdown.
-BATTERYLEVEL 5
+BATTERYLEVEL <%= node[:apcupsd][:batterylevel] %>
 
 # If during a power failure, the remaining runtime in minutes 
 # (as calculated internally by the UPS) is below or equal to MINUTES,
 # apcupsd, will initiate a system shutdown.
-MINUTES 3
+MINUTES <%= node[:apcupsd][:minutes] %>
 
 # If during a power failure, the UPS has run on batteries for TIMEOUT
 # many seconds or longer, apcupsd will initiate a system shutdown.
@@ -148,27 +148,27 @@ MINUTES 3
 #    if you pull the power plug.   
 #  If you have an older dumb UPS, you will want to set this to less than
 #    the time you know you can run on batteries.
-TIMEOUT 0
+TIMEOUT <%= node[:apcupsd][:timeout] %>
 
 #  Time in seconds between annoying users to signoff prior to
 #  system shutdown. 0 disables.
-ANNOY 300
+ANNOY <%= node[:apcupsd][:annoy] %>
 
 # Initial delay after power failure before warning users to get
 # off the system.
-ANNOYDELAY 60
+ANNOYDELAY <%= node[:apcupsd][:annoydelay] %>
 
 # The condition which determines when users are prevented from
 # logging in during a power failure.
 # NOLOGON <string> [ disable | timeout | percent | minutes | always ]
-NOLOGON disable
+NOLOGON <%= node[:apcupsd][:nologon] %>
 
 # If KILLDELAY is non-zero, apcupsd will continue running after a
 # shutdown has been requested, and after the specified time in
 # seconds attempt to kill the power. This is for use on systems
 # where apcupsd cannot regain control after a shutdown.
 # KILLDELAY <seconds>  0 disables
-KILLDELAY 0
+KILLDELAY <%= node[:apcupsd][:killdelay] %>
 
 #
 # ==== Configuration statements for Network Information Server ====
@@ -178,7 +178,7 @@ KILLDELAY 0
 #  information server. If netstatus is on, a network information
 #  server process will be started for serving the STATUS and
 #  EVENT data over the network (used by CGI programs).
-NETSERVER on
+NETSERVER <%= node[:apcupsd][:netserver] %>
 
 # NISIP <dotted notation ip address>
 #  IP address on which NIS server will listen for incoming connections.
@@ -189,18 +189,18 @@ NETSERVER on
 #  NIS will listen for connections only on that interface. Use the
 #  loopback address (127.0.0.1) to accept connections only from the
 #  local machine.
-NISIP 127.0.0.1
+NISIP <%= node[:apcupsd][:nisip] %>
 
 # NISPORT <port> default is 3551 as registered with the IANA
 #  port to use for sending STATUS and EVENTS data over the network.
 #  It is not used unless NETSERVER is on. If you change this port,
 #  you will need to change the corresponding value in the cgi directory
 #  and rebuild the cgi programs.
-NISPORT 3551
+NISPORT <%= node[:apcupsd][:nisport] %>
 
 # If you want the last few EVENTS to be available over the network
 # by the network information server, you must define an EVENTSFILE.
-EVENTSFILE /var/log/apcupsd.events
+EVENTSFILE <%= node[:apcupsd][:eventsfile] %>
 
 # EVENTSFILEMAX <kilobytes>
 #  By default, the size of the EVENTSFILE will be not be allowed to exceed
@@ -208,7 +208,7 @@ EVENTSFILE /var/log/apcupsd.events
 #  be removed from the beginning of the file (first in first out).  The
 #  parameter EVENTSFILEMAX can be set to a different kilobyte value, or set
 #  to zero to allow the EVENTSFILE to grow without limit.
-EVENTSFILEMAX 10
+EVENTSFILEMAX <%= node[:apcupsd][:eventsfilemax] %>
 
 #
 # ========== Configuration statements used if sharing =============
@@ -221,38 +221,38 @@ EVENTSFILEMAX 10
 # UPSCLASS [ standalone | shareslave | sharemaster ]
 #   Normally standalone unless you share an UPS using an APC ShareUPS
 #   card.
-UPSCLASS standalone
+UPSCLASS <%= node[:apcupsd][:upsclass] %>
 
 # UPSMODE [ disable | share ]
 #   Normally disable unless you share an UPS using an APC ShareUPS card.
-UPSMODE disable
+UPSMODE <%= node[:apcupsd][:upsmode] %>
 
 #
 # ===== Configuration statements to control apcupsd system logging ========
 #
 
 # Time interval in seconds between writing the STATUS file; 0 disables
-STATTIME 0
+STATTIME <%= node[:apcupsd][:stattime] %>
 
 # Location of STATUS file (written to only if STATTIME is non-zero)
-STATFILE /var/log/apcupsd.status
+STATFILE <%= node[:apcupsd][:statfile] %>
 
 # LOGSTATS [ on | off ] on enables, off disables
 # Note! This generates a lot of output, so if         
 #       you turn this on, be sure that the
 #       file defined in syslog.conf for LOG_NOTICE is a named pipe.
 #  You probably do not want this on.
-LOGSTATS off
+LOGSTATS <%= node[:apcupsd][:logstats] %>
 
 # Time interval in seconds between writing the DATA records to
 #   the log file. 0 disables.
-DATATIME 0
+DATATIME <%= node[:apcupsd][:datatime] %>
 
 # FACILITY defines the logging facility (class) for logging to syslog. 
 #          If not specified, it defaults to "daemon". This is useful 
 #          if you want to separate the data logged by apcupsd from other
 #          programs.
-#FACILITY DAEMON
+FACILITY <%= node[:apcupsd][:facility] %>
 
 #
 # ========== Configuration statements used in updating the UPS EPROM =========
