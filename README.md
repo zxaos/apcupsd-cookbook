@@ -1,5 +1,5 @@
 # apcupsd cookbook
-Provides a recipe to install and cofigure apcupsd, a daemon for for monitoring compatible UPS devices.
+Provides a recipe to install and configure apcupsd, a daemon for for monitoring compatible UPS devices.
 
 ## Requirements
 None
@@ -10,17 +10,14 @@ include_recipe "apcupsd" or add it to your runlist.
 ## Attributes
 Each attribute maps to a configurable in `apcupsd.conf`. Consult the template file or generated conf file for a description of each attribute. If no changes are made to attributes, a standalone USB-connected UPS is assumed.
 
-## Author
-Author:: Matt Bond ( @zxaos )
-
-## License
+## Author and License
 Copyright (C) 2013 Matt Bond
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-   [http://www.apache.org/licenses/LICENSE-2.0]
+   http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
